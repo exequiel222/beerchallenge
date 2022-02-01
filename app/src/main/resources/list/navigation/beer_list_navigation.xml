@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/beer_list_navigation"
+    app:startDestination="@id/beer_list_entry">
+
+    <fragment
+        android:id="@+id/beer_list_entry"
+        android:name="com.exequiel.challenge.beers.features.list.view.BeerListFragment"
+        android:label="BeerListEntry"
+        tools:layout="@layout/beer_list_fragment">
+        <action
+            android:id="@+id/action_beer_list_entry_to_beer_detail_entry"
+            app:destination="@id/beer_detail_entry" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/beer_detail_entry"
+        android:name="com.exequiel.challenge.beers.features.detail.view.BeerDetailFragment"
+        android:label="BeerDetailEntry"
+        tools:layout="@layout/beer_detail_fragment">
+
+        <argument
+            android:name="movieId"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </fragment>
+    
+</navigation>

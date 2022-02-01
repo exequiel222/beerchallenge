@@ -1,0 +1,30 @@
+package com.exequiel.challenge.beers.core.view
+
+import android.content.pm.ActivityInfo
+import android.os.Bundle
+import android.view.LayoutInflater
+import androidx.appcompat.app.AppCompatActivity
+import androidx.viewbinding.ViewBinding
+import com.exequiel.challenge.beers.core.BaseViewActionsInterface
+import java.lang.reflect.ParameterizedType
+
+abstract class BaseActivity<T : ViewBinding> :
+        AppCompatActivity(), BaseViewActionsInterface {
+
+    lateinit var binding: T
+
+    private var mLastClickTime: Long = 0
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val type = javaClass.genericSuperclass as ParameterizedType
+        val clazz = type.actualTypeArguments[0] as Class<*>
+        val method = clazz.getMethod("inflate", LayoutInflater::class.java)
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+        binding = method.invoke(null, layoutInflater) as T
+        setContentView(binding.root)
+        viewOnReady()
+        bindObserversToLiveData()
+    }
+
+}
